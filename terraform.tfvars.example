@@ -1,0 +1,9 @@
+# Copia este archivo a terraform.tfvars y ajusta lo que necesites.
+# Los valores por defecto ya están pensados para ser económicos.
+
+region             = "us-east-1"
+cluster_name       = "eks-cluster-basico"
+instance_type      = "t3a.medium"
+node_count         = 1
+use_spot_instances = true
+disk_size_gb       = 20
