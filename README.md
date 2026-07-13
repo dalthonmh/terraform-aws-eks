@@ -1,10 +1,10 @@
-# Cluster de Kubernetes (Amazon EKS) con Terraform — Proyecto de aprendizaje
+# Cluster de Kubernetes (Amazon EKS) con Terraform
 
 Este proyecto crea un cluster de **Amazon EKS (Elastic Kubernetes Service)**
-usando **Terraform**, pensado para aprender gastando lo mínimo posible:
+usando **Terraform**, pensado para practicar gastando lo mínimo posible:
 
 - 1 solo nodo `t3a.medium` (2 vCPU / 4 GB RAM).
-- Nodo tipo **Spot** (bastante más barato que On-Demand).
+- Nodo tipo **Spot** (más barato que On-Demand).
 - VPC propia con **subredes públicas y sin NAT Gateway**, para evitar su
   costo fijo (~30 USD/mes).
 - Disco de 20 GB por nodo.
@@ -15,9 +15,9 @@ usando **Terraform**, pensado para aprender gastando lo mínimo posible:
 > nodos tengas. A eso se le suma el nodo EC2 (con Spot + `t3a.medium`,
 > unos pocos centavos por hora). **La clave para no gastar de más es
 > destruir el cluster (`terraform destroy`) apenas termines de
-> practicar** — ver el paso 9.
+> practicar**.
 >
-> Este setup está pensado para **practicar y aprender**, no para
+> Este setup está pensado para **practicar**, no para
 > producción: los nodos Spot pueden ser interrumpidos por AWS en
 > cualquier momento, y solo hay 1 nodo (sin alta disponibilidad).
 
@@ -61,7 +61,7 @@ Si te falta algo, instalarlo:
 ## 2. Autenticarte con AWS
 
 Necesitas un usuario/rol de IAM con permisos para crear VPCs, roles IAM,
-y clusters de EKS (para aprender, el más simple es usar un usuario con la
+y clusters de EKS (para practicar, el más simple es usar un usuario con la
 policy administrada `AdministratorAccess`; para algo más acotado, se
 necesitan permisos de `ec2`, `eks` e `iam`).
 
@@ -76,6 +76,9 @@ Verifica que quedó bien configurado:
 
 ```bash
 aws sts get-caller-identity
+aws configure list-profiles
+aws configure list
+export AWS_PROFILE=production
 ```
 
 ## 3. Configurar tus variables
@@ -178,13 +181,13 @@ que no lo dejes activo si no lo estás usando.
 Todo es configurable desde `variables.tf` / `terraform.tfvars`, por ejemplo:
 
 | Variable             | Qué controla                             |
-| --------------------- | ---------------------------------------- |
-| `instance_type`       | Tipo de instancia EC2 del nodo (CPU/RAM) |
-| `node_count`          | Cantidad de nodos                        |
-| `use_spot_instances`  | Usar nodos Spot o On-Demand (estables)  |
-| `disk_size_gb`        | Tamaño de disco por nodo                 |
-| `region`              | Región de AWS donde se crea todo         |
-| `kubernetes_version`  | Versión de Kubernetes del control plane  |
+| -------------------- | ---------------------------------------- |
+| `instance_type`      | Tipo de instancia EC2 del nodo (CPU/RAM) |
+| `node_count`         | Cantidad de nodos                        |
+| `use_spot_instances` | Usar nodos Spot o On-Demand (estables)   |
+| `disk_size_gb`       | Tamaño de disco por nodo                 |
+| `region`             | Región de AWS donde se crea todo         |
+| `kubernetes_version` | Versión de Kubernetes del control plane  |
 
 ## Solución de problemas comunes
 
