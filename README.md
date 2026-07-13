@@ -188,20 +188,3 @@ Todo es configurable desde `variables.tf` / `terraform.tfvars`, por ejemplo:
 | `disk_size_gb`       | Tamaño de disco por nodo                 |
 | `region`             | Región de AWS donde se crea todo         |
 | `kubernetes_version` | Versión de Kubernetes del control plane  |
-
-## Solución de problemas comunes
-
-- **"UnauthorizedOperation" o errores de permisos IAM**: tu usuario/rol
-  no tiene los permisos necesarios; usa uno con más privilegios (ver
-  paso 2) o pide que te agreguen los permisos de `ec2`, `eks` e `iam`.
-- **`kubectl` da error de autenticación / "Unauthorized"**: revisa que
-  ejecutaste `aws eks update-kubeconfig` con las mismas credenciales de
-  AWS con las que hiciste el `terraform apply` (quien aplica el
-  Terraform es quien queda como admin del cluster).
-- **El nodo Spot no aparece o desaparece**: AWS puede interrumpir
-  instancias Spot cuando necesita esa capacidad; para un cluster de
-  aprendizaje esto es aceptable, pero si te molesta, pon
-  `use_spot_instances = false` en tu `terraform.tfvars`.
-- **`terraform destroy` se queda colgado**: a veces el node group tarda
-  varios minutos en eliminarse; es normal, espera a que termine antes de
-  reintentar.
