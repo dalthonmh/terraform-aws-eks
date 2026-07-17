@@ -13,7 +13,7 @@ variable "cluster_name" {
 variable "kubernetes_version" {
   description = "Versión de Kubernetes del control plane. Si se deja null, AWS usa la versión por defecto vigente."
   type        = string
-  default     = null
+  default     = "1.35"
 }
 
 variable "vpc_cidr" {
@@ -25,7 +25,7 @@ variable "vpc_cidr" {
 variable "instance_type" {
   description = "Tipo de instancia EC2 para el nodo worker."
   type        = string
-  default     = "t3a.medium"
+  default     = "t3.medium"
 }
 
 variable "node_count" {
