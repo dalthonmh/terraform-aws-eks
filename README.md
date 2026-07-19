@@ -9,14 +9,6 @@ usando **Terraform**, pensado para practicar gastando lo mínimo posible:
   costo fijo (~30 USD/mes).
 - Disco de 20 GB por nodo.
 
-> ⚠️ **Importante sobre el costo — a diferencia de GKE, en AWS el control
-> plane de EKS NO es gratis.** Cuesta un fijo de **~0.10 USD/hora**
-> (≈ 73 USD/mes si lo dejas corriendo todo el mes), sin importar cuántos
-> nodos tengas. A eso se le suma el nodo EC2 (con Spot + `t3a.medium`,
-> unos pocos centavos por hora). **La clave para no gastar de más es
-> destruir el cluster (`terraform destroy`) apenas termines de
-> practicar**.
->
 > Este setup está pensado para **practicar**, no para
 > producción: los nodos Spot pueden ser interrumpidos por AWS en
 > cualquier momento, y solo hay 1 nodo (sin alta disponibilidad).
@@ -125,7 +117,7 @@ Al terminar, Terraform muestra un output llamado `get_credentials_command`.
 Ejecútalo (o usa este, reemplazando los valores si cambiaste algo):
 
 ```bash
-aws eks update-kubeconfig --region us-east-1 --name eks-cluster-basico
+aws eks update-kubeconfig --region us-east-1 --name eks-cluster-basic
 ```
 
 Esto configura tu `~/.kube/config` para que `kubectl` apunte al nuevo
@@ -154,7 +146,7 @@ Cuando termines de practicar, **destruye los recursos** para dejar de
 pagar por ellos:
 
 ```bash
-terraform destroy
+terraform destroy --auto-approve
 ```
 
 Confirma escribiendo `yes`. Esto elimina el node group, el cluster, los
