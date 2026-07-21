@@ -19,6 +19,9 @@ resource "aws_eks_cluster" "main" {
 
   depends_on = [
     aws_iam_role_policy_attachment.cluster_policy,
+    # El cluster depende de la limpieza para que, en el destroy, se elimine
+    # ANTES que ella (y la limpieza corra con el cluster ya destruido).
+    null_resource.vpc_cleanup,
   ]
 
   tags = {
@@ -50,6 +53,8 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role_policy_attachment.node_worker_policy,
     aws_iam_role_policy_attachment.node_cni_policy,
     aws_iam_role_policy_attachment.node_ecr_policy,
+    # Igual que el cluster: se destruye antes que la limpieza.
+    null_resource.vpc_cleanup,
   ]
 
   tags = {
